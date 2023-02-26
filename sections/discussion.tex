@@ -1,0 +1,79 @@
+\section{Discussion and Research Limitations} \label{sec:discussion}
+This chapter compares and discusses the results obtained with the two robot configurations, answers the research question and sub-questions and finally notes the limitations of this study.
+
+\subsection{Comparison of the robot configurations}
+
+The following sections compare the robots regarding time, number of realignments, power consumption and cost. The time comparison is split into three categories: time at intersections, time for realignments and time driving on the paths.
+
+\subsubsection{Time Measurements}\label{sec:time_measurements}
+
+\paragraph{Scanning and navigating intersections}\label{sec:discussion_intersections}
+
+The results presented in Section \ref{sec:fixrob_vs_turnrob} show that \FixRob is faster than \TurnRob only at intersections, where the robot eventually turns \textit{left}. This is due to how the robots are programmed to scan and navigate at intersections. While \FixRob immediately turns left, sees the \textit{left} path and takes it, \TurnRob first turns the sensor to scan for a left path and then turns left to take it. 
+
+Although \FixRob initially turns 135 degrees to the left to avoid missing the \textit{left} path in case it does not enter the intersection perfectly aligned, this 45-degree turn and subsequent turn back to the \textit{left} path is less time-consuming than the scan that \TurnRob performs. 
+
+On the other hand, \TurnRob is faster than \FixRob at intersections where it does not turn left because ensuring that there is no \textit{left} path by rotating the sensor takes less time than rotating the entire robot 135 degrees counterclockwise and then turning back to take the \textit{straight}, \textit{right} or \textit{back} path.
+
+Finally, Table 5 shows that \TurnRob is only 3.88 seconds or 3.52\%  faster than \FixRob when scanning and driving through all eight intersection types once. Although this time improvement is not substantial, it is worth mentioning because it was constrained by LEGO Mindstorms hardware limitations. Since the motor for turning the sensor had to be turned relatively slowly, the time saving was not that great. If motors with high accuracy at higher speeds were used, the time improvement over \FixRob could be much more significant.
+
+
+\paragraph{Driving on the paths}
+As expected, both robots performed similarly regarding time spent on the black lines. Both robots used the same drive system and drove at the same speed. This resulted in \FixRob driving 57.21 seconds and the \TurnRob driving 56.41 seconds purely on paths. It is important to note that according to the measurements, both robots took significantly longer for the path between intersection \#13 and \#14 than for the rest of the paths. This is due to a measurement error and is discussed in more detail in Sections \ref{sec:fixed_discussion} and \ref{sec:turning_discussion}.
+
+\paragraph{Realignments to the path}
+The time spent for realignments when the line was lost was similar for both robot configurations. This was expected as the robots use the same realignment strategy described in Section \ref{sec:realignment_strategy}.
+
+\subsubsection{Number of realignments}
+The average number of realignments per run indicates how precisely the robot was aligned with the path after passing through an intersection and how accurately it followed paths. This number was similar for both robots. \FixRob performed 26.18 realignments on average per run, while \TurnRob realigned 25 times on average. Since the robots must traverse eighteen black paths to complete the maze, \FixRob realigns 1.45 times and \TurnRob 1.39 times per path. These numbers are quite large, considering that the paths are straight.
+
+Although no definitive conclusion can be drawn, the similar number of realignments between the robots suggests that both were equally well aligned after scanning and navigating intersections. This is because if one of the robots had not been, it would have needed more realignments on average than the other.
+
+
+\subsubsection{Power consumption} \label{sec:power_consumption}
+Energy efficiency is another crucial factor in the design of a line-follower robot. During the tests, the power consumption of each robot was measured, but the measurements were inaccurate. The inaccuracy is reflected in the high standard deviation, making it difficult to conclude which robot is better for power consumption. Possible reasons for this are described in Section \ref{sec:fixed_discussion}.
+
+\TurnRob was expected to consume less power than the \FixRob. The hypothesis was that \TurnRob only needed to turn the motor that rotates the sensor to scan for left and straight paths. On the other hand, \FixRob required turning both drive motors to scan intersections, which should have consumed more power. This would have saved \TurnRob energy, especially at intersections where the robot finally does not turn left. This is because \TurnRob does not have to turn 135° to the left and then 135° back to drive straight, right or backwards out of the intersection.
+
+
+\subsubsection{Cost}
+The cost analysis of the two robots showed that \TurnRob is less cost-effective than \FixRob due to its additional motor. The difference between the two robots is about 15 Euros considering only the electrical parts. It should also be noted that \FixRob's costs are minimal since none of the electrical components can be removed without losing the ability to follow lines and solve mazes.
+
+\subsection{Answering the research question and sub-questions}
+
+\subsubsection{Research question} 
+The research question of this study was: \textbf{"Is a robot with a 180-degree horizontally rotatable colour sensor more time-, energy-, and cost-efficient than a robot with a fixed colour sensor solving simply connected line mazes?"}
+To answer this question, a series of measurements and analyses were performed. In terms of speed, both robots performed similarly in the test maze. While the more detailed comparison of the individual time categories in Section \ref{sec:time_measurements} showed that both robots performed similarly in realignment and navigation on the line, it was found that \TurnRob generally performed slightly better than \FixRob in scanning and navigating intersections.
+
+Which robot is better in energy consumption could not be determined due to inaccurate measurement results. Nevertheless, \TurnRob is the recommended robot in terms of energy consumption since it should consume less power according to the theory described in Section \ref{sec:power_consumption}. More details about the measurement inaccuracies can be found in Section \ref{sec:fixed_discussion}.
+
+Finally, when comparing the robots in terms of cost, \FixRob is slightly cheaper than \TurnRob. Since \TurnRob uses an additional motor, it is 15 Euros more expensive than \FixRob.
+
+
+\subsubsection{Sub-questions}
+
+\begin{tabular}{p{0.05\textwidth} p{0.85\textwidth}}
+    
+    \textbf{Q$_{1}$:} & \textbf{Is it possible to control the motor that turns the sensor via ROS2 and nxt-python precisely enough to scan intersections and realign the robot?}
+    
+    \TurnRob's eleven successful runs showed that the robot could rotate the sensor precisely enough to scan intersections. As described in Section \ref{sec:turning_intersection_scanning}, the robot first rotates the sensor to the left to check if the left path is available and then checks the availability of the straight path by turning the sensor back. If precise control had not been possible, the robot would not have been able to traverse the maze because it would have missed paths at intersections. Although the accuracy of the motor was not measured directly, it was also observed that it returned precisely to its original position after the scan was completed.
+    
+    However, the NXT motor's precision and speed are insufficient for realigning the robot to the line. To implement this process efficiently, it would be necessary to turn the sensor only a few degrees to determine as quickly as possible which side the line is in relation to the robot and then correct the trajectory. However, as described in the documentation of the underlying library for controlling the motors, it is not possible or too inaccurate to rotate the motor less than 50 degrees \cite{nxtpythonmotor}. \\
+    
+
+    \textbf{Q$_{2}$:} & \textbf{Which robot configuration is most reliable for following the lines, scanning the intersections and solving the maze?}
+    
+    The eleven successful runs of both robots show that they have very similar results in terms of reliability when solving the maze. Each robot could reliably follow the line, with \FixRob requiring an average of 26.18 realignments and \TurnRob needing 25 per run. Both robots could scan and navigate all intersections error-free during the test runs. In summary, both robots performed similarly regarding reliability when solving the maze.
+\end{tabular}
+
+
+\subsection{Limitations}\label{sec:limitations}
+Although many things were considered, this study has certain limitations. The following points are intended to show under what conditions the results are valid and to help future researchers avoid the same shortcomings.
+
+An explicit limitation of the study is the inaccuracy of the measurements of the robot's power consumption, due to which the robots could not be compared in terms of energy consumption. The battery voltage measurement function built into the robot was expected to provide sufficiently accurate data. However, the high standard deviation of the voltage data indicates substantial measurement inaccuracies.
+It is not clear why the data deviated so much. As described in the data collection Section \ref{sec:data_collection}, efforts were made to keep the same conditions for both robots to make the results more comparable. However, the battery voltage measurements are affected by many factors, as explained in Section \ref{sec:fixed_discussion}, and the NXT Brick likely gave inaccurate readings.
+
+Another limitation is the small variety of robot configurations. Only two configurations were designed and tested for this study. This limits the results to robots with a single sensor and differential drive control. Analysing configurations with multiple sensors would be interesting, as they would allow for more efficient realignment or intersection scanning strategies. These improvements could impact the speed of the robot and potentially save energy.
+
+A final limitation is that the robots were only tested in a single maze. The maze is shown in Figure \ref{fig:maze}, and the detailed properties are described in Section \ref{sec:maze_properties}.
+Although the test maze was designed to include all possible intersection types shown in Figure \ref{fig:intersection_types}, testing the robots on several different mazes would have made the results more robust.

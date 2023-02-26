@@ -1,0 +1,78 @@
+\documentclass[12pt, a4paper]{thesis}
+
+\exposeTitle{Comparing sensor configurations for line-following LEGO robots in maze navigation}
+
+\exposeType{Bachelor Thesis}
+\name{Marvin Knoll}
+\email{marvin.knoll@code.berlin}
+\studyProgram{Bachelor of Science (B.Sc.) - Software Engineering}
+\semester{Spring Semester 2023}
+\enrollmentNumber{19.01.078}
+\supervisorOne{Frank Trollmann}
+\supervisorTwo{Ulrich von Zadow}
+
+
+\begin{document}
+
+% title page
+\maketitle
+\thispagestyle{empty}
+\newpage
+
+\null
+\thispagestyle{empty}
+\newpage
+
+\thispagestyle{empty}
+\input{sections/acknowledgments.tex}
+\newpage
+
+%empty page
+\null
+\thispagestyle{empty}
+\newpage
+
+\pagenumbering{Roman} 
+\input{declaration/declaration}
+\newpage
+\input{abstract/abstract}
+\newpage
+\tableofcontents
+\newpage
+\listoffigures
+\listoftables
+\newpage
+
+\pagenumbering{arabic} 
+
+\input{sections/introduction}
+\clearpage
+\input{sections/researchquestion}
+\clearpage
+\input{sections/literature_review}
+\clearpage
+\input{sections/methodology}
+\clearpage
+\input{sections/results}
+\clearpage
+\input{sections/discussion}
+\clearpage
+\input{sections/conclusion}
+\clearpage
+
+\section*{References}
+\addcontentsline{toc}{section}{References}
+\printbibliography[heading=none]\label{references}
+
+%empty page
+\newpage
+\null
+\thispagestyle{empty}
+\newpage
+
+\appendix
+\setcounter{section}{0}
+\renewcommand{\thesection}{A.}
+\input{sections/appendix.tex}
+
+\end{document}

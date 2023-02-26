@@ -1,0 +1,26 @@
+\section{Conclusion} \label{sec:conclusion}
+
+Line-following robots are used in various industries as they are reliable, cheap and easy to build. As the designs of these robots vary in driving, sensing and controlling setups, it is crucial to understand how the different configurations affect efficiency. By testing two different robots built out of the popular LEGO Mindstorms NXT 2.0 kit inside a maze, this study found that the robot using a motor for turning the colour sensor for scanning intersections is slightly faster than the robot with a single fixed colour sensor. Hereby the time savings could be increased if faster and more accurate motors were used. Thus, the results suggest using a rotating sensor for efficient intersection scanning when only a single colour sensor is used.
+
+\subsection{Relevance of the results for other robots}
+
+To determine if the results are relevant for conventional robots, it is necessary to analyze how similar the LEGO Mindstorm NXT 2.0 components are compared to conventional components. The electronic LEGO MINDSTORMS parts used in this study are the colour sensor, the motors, and the NXT brick. Here, the colour sensor is comparable to the widely used TCS230/TCS3200 sensor, and the motor can be compared to a conventional 9V DC motor combined with an optical encoder and a 1:48 gearbox. On the other hand, the NXT device is difficult to compare, but an Arduino Mega or a Raspberry Pi could be used to read and control the sensors and motors. Therefore, the LEGO parts are generally well-comparable with standard components.
+
+What has not yet been discussed, but could lead to different results, is how the robots in this study and conventional robots are programmed. As described in Section \ref{sec:software_setup_general}, \FixRob and \TurnRob were programmed with nxt\_ros2 running on a computer connected to the robot. While this has several advantages, it has the disadvantage of having a relatively slow feedback loop between the sensor input and motor output. In contrast, conventional line-following robots are usually designed with all the code running on the robot's microcontroller. This allows these robots to react much faster and more accurately to sensor input, which means they can follow lines and scan intersections more precisely and quickly than the LEGO robots. However, conventional robots could also be programmed like the robots in this study. The ROS2 package "nxt\_maze\_solving" created for this study was implemented in a very generic way so that non-LEGO robots could be easily integrated.
+
+In summary, conventional robots of similar size built from the above components and programmed in the same way as the robots in this study should achieve similar results. However, it must be said that non-LEGO robots could also use faster, more precise, and more energy-efficient components, which would lead to different results.
+
+Finally, it should be mentioned that the time ratios should be similar for conventional robots. This means these robots will also likely spend most of their time at intersections compared to time on the track or for realignments. In addition, these robots will also spend more time scanning and navigating specific intersections than others. However, since no tests have been performed, making a definitive statement about this is impossible.
+
+
+\subsection{Future work}
+
+This final section revisits the limitations identified in Section \ref{sec:limitations} and suggests how future researchers could avoid the same shortcomings.
+
+The inaccuracies in the power consumption data made it impossible to compare the two robots in this dimension. As mentioned earlier, this was due to several factors, one of which was that the power consumption was measured using the NXT device. Since this likely provided inaccurate measurement results, future studies could use external devices to measure power consumption.
+
+A further limitation mentioned in Section \ref{sec:limitations} was the small variety of robot configurations. Future studies could implement different sensor configurations and experiment with external, non-LEGO sensors by integrating them through ROS2. Researchers could also test different driving systems, such as Ackerman or holonomic systems, to better understand their advantages and disadvantages in different scenarios.
+
+In addition to the small number of different robot configurations, testing on a single maze was also a limitation of the study. In the future, scientists could build more test mazes or simulate them. Since the entire project is based on ROS2 and parts of the robot models already exist, the simulation of the robots would require little additional work.
+
+Finally, to see if the results of this study are relevant and transferable to conventional non-LEGO robots, scientists could build robots and test them in the same maze.
